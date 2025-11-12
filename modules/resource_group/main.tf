@@ -1,4 +1,4 @@
-resource "azurerm_resource_group" "this" {
+resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
   location = var.location
 
@@ -6,8 +6,6 @@ resource "azurerm_resource_group" "this" {
     {
       Environment = var.environment
       Owner       = var.owner
-      ManagedBy   = "Terraform"
-      CostCenter  = var.cost_center
     },
     var.additional_tags
   )
