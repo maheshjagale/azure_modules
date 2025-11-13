@@ -33,6 +33,24 @@ module "subnet" {
   address_prefixes     = var.subnet_address_prefixes
 }
 
+# Create a dedicated subnet for Azure Bastion
+module "bastion_subnet" {
+  source               = "./modules/subnet"
+  name                 = "AzureBastionSubnet"  # Required name for Azure Bastion
+  resource_group_name  = module.resource_group.name
+  virtual_network_name = module.vnet.name
+  address_prefixes     = var.bastion_subnet_address_prefixes  # e.g., ["10.0.100.0/26"]
+}
+
+# Create the Bastion host
+module "bastion" {
+  source              = "./modules/bastion"
+  bastion_name        = var.bastion_name
+  location            = module.resource_group.location
+  resource_group_name = module.resource_group.name
+  subnet_id           = module.bastion_subnet.id
+}
+
 module "vm" {
   source               = "./modules/vm"
   name                 = var.vm_name
