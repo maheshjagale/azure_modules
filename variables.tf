@@ -28,6 +28,17 @@ variable "subnet_address_prefixes" {
   type        = list(string)
 }
 
+variable "bastion_name" {
+  description = "Name of the Bastion host"
+  type        = string
+  default     = "trio-bastion-host"
+}
+
+variable "bastion_subnet_address_prefixes" {
+  description = "Address prefixes for the Bastion subnet (must be /26 or larger)"
+  type        = list(string)   
+}
+
 variable "vm_name" {
   description = "Name of the VM"
   type        = string
